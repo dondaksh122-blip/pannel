@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir flask flask-sqlalchemy gunicorn
 RUN g++ -O3 prime.cpp -o PRIME -pthread
 RUN chmod +x PRIME
 
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
+CMD gunicorn --bind 0.0.0.0:$PORT app:app
