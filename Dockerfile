@@ -5,4 +5,4 @@ COPY . .
 RUN pip install flask flask-sqlalchemy
 RUN g++ -O3 prime.cpp -o PRIME -pthread
 RUN chmod +x PRIME
-CMD ["python", "app.py"]
+CMD ["gunicorn", "-b", "0.0.0.0:$PORT", "app:app"]
