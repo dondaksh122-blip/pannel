@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PRIME V6 | Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #06090f; color: #c9d1d9; font-family: 'Inter', sans-serif; display: flex; }
+        .sidebar { width: 260px; height: 100vh; background: #0d1117; border-right: 1px solid #30363d; padding: 25px; position: fixed; }
+        .main { margin-left: 260px; padding: 40px; width: 100%; }
+        .nav-link { color: #8b949e; padding: 12px; margin: 8px 0; border-radius: 10px; text-decoration: none; display: block; }
+        .nav-link:hover, .nav-link.active { background: rgba(255, 62, 62, 0.1); color: #ff3e3e; }
+        .kim-card { background: #161b22; border: 1px solid #30363d; border-radius: 15px; padding: 25px; margin-bottom: 25px; }
+        .btn-fire { background: #ff3e3e; color: white; border: none; padding: 12px; font-weight: bold; border-radius: 8px; width: 100%; }
+        .form-control { background: #06090f; border: 1px solid #30363d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3 class="text-white mb-5"><i class="fas fa-fire text-danger"></i> PRIME V6</h3>
+        <nav>
+            <a href="/" class="nav-link active"><i class="fas fa-th-large me-2"></i> Dashboard</a>
+            <a href="https://t.me/PrimeXArmy111" target="_blank" class="nav-link text-info"><i class="fab fa-telegram me-2"></i> Telegram</a>
+            <a href="/logout" class="nav-link mt-5"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+        </nav>
+    </div>
+    <div class="main">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="kim-card">
+                    <h5 class="mb-4">🚀 Launch Attack</h5>
+                    <form id="attackForm">
+                        <input type="text" name="host" class="form-control mb-3" placeholder="Target IP" required>
+                        <div class="row mb-3">
+                            <div class="col"><input type="number" name="port" class="form-control" placeholder="Port" required></div>
+                            <div class="col"><input type="number" name="time" class="form-control" value="300"></div>
+                        </div>
+                        <button type="submit" class="btn-fire">FIRE ATTACK</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="kim-card h-100">
+                    <h5>📜 Recent Logs</h5>
+                    <table class="table table-dark mt-3 small">
+                        <thead><tr><th>Target</th><th>Port</th><th>User</th></tr></thead>
+                        <tbody>
+                            {% for log in logs %}
+                            <tr><td>{{ log.target }}</td><td>{{ log.port }}</td><td>{{ log.user }}</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#attackForm').on('submit', function(e){
+            e.preventDefault();
+            $.post('/launch', $(this).serialize(), function(data){
+                alert(data.message);
+                location.reload();
+            });
+        });
+    </script>
+</body>
+</html>
